@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAY LOAD APPLICATION AGUSTA 109S PK-TWZ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            box-sizing: border-box;
+            min-height: 100vh;
+        }
+        /* Custom styles for number input arrows */
+        input[type=number]::-webkit-inner-spin-button, 
+        input[type=number]::-webkit-outer-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        }
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #374151;
+        }
+        .data-row:last-child {
+            border-bottom: none;
+        }
+        .data-label {
+            color: #D1D5DB;
+            font-weight: 500;
+        }
+        .data-value {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .data-input {
+            width: 100px;
+            background-color: #374151;
+            color: #F9FAFB;
+            border: 1px solid #4B5563;
+            border-radius: 0.375rem;
+            padding: 0.25rem 0.5rem;
+            text-align: right;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .data-input:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .data-output {
+            color: #F9FAFB;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: right;
+            background-color: #065F46;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.375rem;
+            border: 1px solid #047857;
+        }
+        .data-unit {
+            color: #9CA3AF;
+            width: 50px;
+            text-align: left;
+        }
+        .card {
+            background: rgba(31, 41, 55, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(75, 85, 99, 0.3);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            padding: 0.75rem;
+            text-align: center;
+            background: linear-gradient(135deg, #3B82F6, #1D4ED8);
+            border-radius: 0.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #60A5FA;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        .highlight-result {
+            background: linear-gradient(135deg, #059669, #047857);
+            color: white;
+            font-weight: 700;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <!-- Login Page -->
+    <div id="loginPage" class="min-h-screen flex items-center justify-center">
+        <div class="card max-w-md w-full mx-4">
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-4">🚁</div>
+                <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">Pay Load Application Helicopter TWA</h1>
+                <p class="text-sm text-gray-400">by SkyOps Solutions</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-6">
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-300 mb-2">Username</label>
+                    <input type="email" id="username" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20" placeholder="Enter your email" required>
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-300 mb-2">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20" placeholder="Enter your password" required>
+                </div>
+                
+                <button type="submit" class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200 transform hover:scale-105">
+                    Sign In
+                </button>
+                
+                <div id="loginError" class="hidden text-red-400 text-center text-sm bg-red-900/20 border border-red-500/30 rounded-lg p-3">
+                    Invalid username or password. Please try again.
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Helicopter Selection Menu -->
+    <div id="helicopterMenu" class="hidden min-h-screen flex items-center justify-center">
+        <div class="container mx-auto max-w-4xl p-4">
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-4">🚁</div>
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">SELECT HELICOPTER TYPE</h1>
+                <p class="text-gray-400 text-lg">Choose your aircraft for payload calculation</p>
+                <div id="welcomeMessageMenu" class="mt-4 p-3 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg text-white font-semibold text-lg"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Bell 412 -->
+                <div class="card hover:scale-105 transition-transform duration-300 cursor-pointer" onclick="selectHelicopter('bell412')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🚁</div>
+                        <h2 class="text-2xl font-bold text-white mb-4">BELL 412</h2>
+                        <div class="space-y-2 text-left text-gray-300">
+                            <p><span class="font-semibold text-blue-400">Cruise Speed:</span> 110 kts</p>
+                            <p><span class="font-semibold text-blue-400">Empty Weight:</span> 7,950 lbs</p>
+                            <p><span class="font-semibold text-blue-400">Gross Weight:</span> 11,900 lbs</p>
+                            <p><span class="font-semibold text-blue-400">Fuel Consumption:</span> 750 lbs/hr</p>
+                            <p><span class="font-semibold text-blue-400">Weight Unit:</span> Pounds (lbs)</p>
+                        </div>
+                        <button class="mt-6 w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200">
+                            Select Bell 412
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Agusta 109S -->
+                <div class="card hover:scale-105 transition-transform duration-300 cursor-pointer" onclick="selectHelicopter('agusta109')">
+                    <div class="text-center">
+                        <div class="text-5xl mb-4">🚁</div>
+                        <h2 class="text-2xl font-bold text-white mb-4">AGUSTA 109S</h2>
+                        <div class="space-y-2 text-left text-gray-300">
+                            <p><span class="font-semibold text-blue-400">Cruise Speed:</span> 145 kts</p>
+                            <p><span class="font-semibold text-blue-400">Empty Weight:</span> 2,223 kg</p>
+                            <p><span class="font-semibold text-blue-400">Gross Weight:</span> 3,175 kg</p>
+                            <p><span class="font-semibold text-blue-400">Fuel Consumption:</span> 232 kg/hr</p>
+                            <p><span class="font-semibold text-blue-400">Weight Unit:</span> Kilograms (kg)</p>
+                        </div>
+                        <button class="mt-6 w-full bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-4 rounded-lg transition duration-200">
+                            Select Agusta 109S
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-8">
+                <button onclick="logout()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-6 rounded-lg transition duration-200">
+                    Logout
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="hidden container mx-auto max-w-4xl p-4 sm:p-6 lg:p-8">
+        <header class="text-center mb-8">
+            <div class="text-6xl mb-4">🚁</div>
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">PAY LOAD APPLICATION</h1>
+            <h2 id="aircraftTitle" class="text-2xl text-blue-400 font-semibold mb-2">AGUSTA 109S PK-TWZ</h2>
+            <p class="text-gray-400 text-lg mb-4">by SkyOps Solutions</p>
+            <div id="welcomeMessage" class="mt-4 p-3 bg-gradient-to-r from-green-600 to-blue-600 rounded-lg text-white font-semibold text-lg animate-pulse"></div>
+            <div class="mt-4">
+                <button onclick="backToMenu()" class="bg-gray-600 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200 mr-2">
+                    ← Back to Menu
+                </button>
+                <button onclick="logout()" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition duration-200">
+                    Logout
+                </button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Kolom Kiri -->
+            <div class="flex flex-col gap-6">
+                <!-- Basic Flight Data -->
+                <div class="card">
+                    <h2 class="card-title">📊 BASIC DATA</h2>
+                    <div class="data-row">
+                        <label for="airspeed" class="data-label">Air Speed</label>
+                        <div class="data-value">
+                            <input type="number" id="airspeed" class="data-input" value="145" oninput="calculateAll()">
+                            <span class="data-unit">kts</span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label class="data-label">Fuel Consumption</label>
+                        <div class="data-value">
+                            <span id="fuelConsumption" class="data-output">232</span>
+                            <span id="fuelConsumptionUnit" class="data-unit">kg/h</span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label for="fuelOnboard" class="data-label">Fuel Onboard</label>
+                        <div class="data-value">
+                            <input type="number" id="fuelOnboard" class="data-input" value="160" oninput="calculateAll()">
+                            <span id="fuelUnit1" class="data-unit">kg</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Payload Calculation -->
+                <div class="card">
+                    <h2 class="card-title">⚖️ PAYLOAD CALCULATION</h2>
+                    <div class="data-row">
+                        <label for="emptyWeight" class="data-label">Empty Weight</label>
+                        <div class="data-value">
+                            <input type="number" id="emptyWeight" class="data-input" value="2223" oninput="calculateAll()">
+                            <span id="weightUnit1" class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row" id="pilotRow">
+                        <label for="pilotWeight" class="data-label">Pilot Weight</label>
+                        <div class="data-value">
+                            <input type="number" id="pilotWeight" class="data-input" value="90" oninput="calculateAll()">
+                            <span id="weightUnit2" class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row" id="captPilotRow" style="display: none;">
+                        <label for="captPilotWeight" class="data-label">Capt Pilot Weight</label>
+                        <div class="data-value">
+                            <input type="number" id="captPilotWeight" class="data-input" value="90" oninput="calculateAll()">
+                            <span class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row" id="coPilotRow" style="display: none;">
+                        <label for="coPilotWeight" class="data-label">Co-Pilot Weight</label>
+                        <div class="data-value">
+                            <input type="number" id="coPilotWeight" class="data-input" value="90" oninput="calculateAll()">
+                            <span class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label for="engineerWeight" class="data-label">Engineer Weight</label>
+                        <div class="data-value">
+                            <input type="number" id="engineerWeight" class="data-input" value="90" oninput="calculateAll()">
+                            <span class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label class="data-label">Fuel Onboard</label>
+                        <div class="data-value">
+                            <span id="fuelWeightDisplay" class="data-output">160</span>
+                            <span id="fuelUnit2" class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row" style="border-top: 2px solid #3B82F6; padding-top: 1rem; margin-top: 0.5rem;">
+                        <label class="data-label" style="color: #60A5FA; font-weight: 700;">Dry Weight</label>
+                        <div class="data-value">
+                            <span id="dryWeight" class="data-output" style="background: linear-gradient(135deg, #1E40AF, #3B82F6); font-size: 1.2em;">2533</span>
+                            <span id="weightUnit4" class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label for="grossWeight" class="data-label">Gross Weight</label>
+                        <div class="data-value">
+                            <input type="number" id="grossWeight" class="data-input" value="3175" oninput="calculateAll()">
+                            <span id="weightUnit5" class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row" style="border-top: 2px solid #059669; padding-top: 1rem; margin-top: 0.5rem;">
+                        <label class="data-label" style="color: #10B981; font-weight: 700;">Payload</label>
+                        <div class="data-value">
+                            <span id="payloadResult" class="data-output" style="background: linear-gradient(135deg, #047857, #059669); font-size: 1.2em;">642</span>
+                            <span id="weightUnit6" class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row" id="payloadKgRow" style="display: none;">
+                        <label class="data-label" style="color: #10B981; font-weight: 700;">Payload (kg)</label>
+                        <div class="data-value">
+                            <span id="payloadKg" class="data-output" style="background: linear-gradient(135deg, #047857, #059669); font-size: 1.2em;">291</span>
+                            <span class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label for="paxWeight" class="data-label">Pax Weight</label>
+                        <div class="data-value">
+                            <input type="number" id="paxWeight" class="data-input" value="75" oninput="calculateAll()">
+                            <span class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label class="data-label">Total Pax</label>
+                        <div class="data-value">
+                            <span id="totalPax" class="data-output highlight-result">8</span>
+                            <span class="data-unit">pax</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kolom Kanan -->
+            <div class="flex flex-col gap-6">
+                <!-- Flight Performance -->
+                <div class="card">
+                    <h2 class="card-title">🚀 FLIGHT PERFORMANCE</h2>
+                    <div class="data-row">
+                        <label class="data-label">Flight Endurance</label>
+                        <div class="data-value">
+                            <span id="flightEndurance" class="data-output highlight-result">0h 41m</span>
+                            <span class="data-unit"></span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label class="data-label">Max Range</label>
+                        <div class="data-value">
+                            <span id="maxRange" class="data-output highlight-result">626</span>
+                            <span class="data-unit">Nm</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Mission Planning -->
+                <div class="card">
+                    <h2 class="card-title">🎯 MISSION PLANNING</h2>
+                    <div class="data-row">
+                        <label for="missionDistance" class="data-label">Mission Distance</label>
+                        <div class="data-value">
+                            <input type="number" id="missionDistance" class="data-input" value="432" oninput="calculateAll()">
+                            <span class="data-unit">Nm</span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label class="data-label">Flight Time</label>
+                        <div class="data-value">
+                            <span id="missionFlightTime" class="data-output">2h 58m</span>
+                            <span class="data-unit"></span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label class="data-label">Fuel Required</label>
+                        <div class="data-value">
+                            <span id="fuelRequired" class="data-output">138</span>
+                            <span id="fuelUnit4" class="data-unit">kg</span>
+                        </div>
+                    </div>
+                    <div class="data-row">
+                        <label class="data-label">Remaining Fuel</label>
+                        <div class="data-value">
+                            <span id="remainingFuel" class="data-output highlight-result">62</span>
+                            <span id="fuelUnit3" class="data-unit">kg</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Indicators -->
+                <div class="card">
+                    <h2 class="card-title">⚠️ SAFETY STATUS</h2>
+                    <div class="space-y-3">
+                        <div id="weightStatus" class="p-3 rounded-lg bg-green-600 text-white text-center font-semibold">
+                            ✅ Berat dalam batas aman
+                        </div>
+                        <div id="fuelStatus" class="p-3 rounded-lg bg-green-600 text-white text-center font-semibold">
+                            ✅ Bahan bakar mencukupi
+                        </div>
+                        <div id="rangeStatus" class="p-3 rounded-lg bg-green-600 text-white text-center font-semibold">
+                            ✅ Jangkauan dapat dicapai
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Login functionality
+        const users = {
+            'fly5103@gmail.com': {
+                password: 'User1',
+                name: 'Capt. S. Teddy P'
+            },
+            'crunkbolcow@gmail.com': {
+                password: 'ramdan28',
+                name: 'Capt. Ramdan'
+            },
+            'marcelino412ep@gmail.com': {
+                password: 'user2',
+                name: 'Capt. Marcelino'
+            }
+        };
+
+        let currentUser = null;
+        let selectedHelicopter = null;
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('loginError');
+            
+            if (users[username] && users[username].password === password) {
+                // Successful login
+                currentUser = users[username];
+                document.getElementById('loginPage').classList.add('hidden');
+                document.getElementById('helicopterMenu').classList.remove('hidden');
+                
+                // Show welcome message in menu
+                const welcomeMessageMenu = document.getElementById('welcomeMessageMenu');
+                welcomeMessageMenu.textContent = `Welcome Home ${users[username].name} Safe Flight`;
+            } else {
+                // Failed login
+                errorDiv.classList.remove('hidden');
+                setTimeout(() => {
+                    errorDiv.classList.add('hidden');
+                }, 3000);
+            }
+        });
+
+        function selectHelicopter(type) {
+            selectedHelicopter = type;
+            document.getElementById('helicopterMenu').classList.add('hidden');
+            document.getElementById('mainApp').classList.remove('hidden');
+            
+            // Show welcome message in main app
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            welcomeMessage.textContent = `Welcome Home ${currentUser.name} Safe Flight`;
+            
+            // Configure helicopter-specific settings
+            if (type === 'bell412') {
+                setupBell412();
+            } else if (type === 'agusta109') {
+                setupAgusta109();
+            }
+            
+            // Initialize calculations
+            calculateAll();
+        }
+
+        function setupBell412() {
+            // Update title
+            document.getElementById('aircraftTitle').textContent = 'BELL 412';
+            
+            // Show Bell 412 specific pilot rows
+            document.getElementById('pilotRow').style.display = 'none';
+            document.getElementById('captPilotRow').style.display = 'flex';
+            document.getElementById('coPilotRow').style.display = 'flex';
+            document.getElementById('payloadKgRow').style.display = 'flex';
+            
+            // Set Bell 412 default values (input in kg, will be converted to lbs in calculation)
+            document.getElementById('airspeed').value = 110;
+            document.getElementById('fuelOnboard').value = 680; // ~1500 lbs in kg
+            document.getElementById('emptyWeight').value = 7950;
+            document.getElementById('captPilotWeight').value = 90;
+            document.getElementById('coPilotWeight').value = 90;
+            document.getElementById('engineerWeight').value = 90;
+            document.getElementById('grossWeight').value = 11900; // 11900 lbs
+            document.getElementById('paxWeight').value = 75; // input in kg
+            document.getElementById('missionDistance').value = 300;
+            
+            // Update all units to lbs for display
+            const weightUnits = ['weightUnit1', 'weightUnit4', 'weightUnit5', 'weightUnit6'];
+            const fuelUnits = ['fuelUnit1', 'fuelUnit2', 'fuelUnit3', 'fuelUnit4'];
+            
+            weightUnits.forEach(id => {
+                document.getElementById(id).textContent = 'lbs';
+            });
+            
+            fuelUnits.forEach(id => {
+                document.getElementById(id).textContent = 'lbs';
+            });
+            
+            document.getElementById('fuelConsumptionUnit').textContent = 'lbs/h';
+        }
+
+        function setupAgusta109() {
+            // Update title
+            document.getElementById('aircraftTitle').textContent = 'AGUSTA 109S PK-TWZ';
+            
+            // Show Agusta 109S specific pilot row
+            document.getElementById('pilotRow').style.display = 'flex';
+            document.getElementById('captPilotRow').style.display = 'none';
+            document.getElementById('coPilotRow').style.display = 'none';
+            document.getElementById('payloadKgRow').style.display = 'none';
+            
+            // Set Agusta 109S default values
+            document.getElementById('airspeed').value = 145;
+            document.getElementById('fuelOnboard').value = 160;
+            document.getElementById('emptyWeight').value = 2223;
+            document.getElementById('pilotWeight').value = 90;
+            document.getElementById('engineerWeight').value = 90;
+            document.getElementById('grossWeight').value = 3175;
+            document.getElementById('paxWeight').value = 75;
+            document.getElementById('missionDistance').value = 432;
+            
+            // Update all units to kg
+            const weightUnits = ['weightUnit1', 'weightUnit2', 'weightUnit4', 'weightUnit5', 'weightUnit6'];
+            const fuelUnits = ['fuelUnit1', 'fuelUnit2', 'fuelUnit3', 'fuelUnit4'];
+            
+            weightUnits.forEach(id => {
+                document.getElementById(id).textContent = 'kg';
+            });
+            
+            fuelUnits.forEach(id => {
+                document.getElementById(id).textContent = 'kg';
+            });
+            
+            document.getElementById('fuelConsumptionUnit').textContent = 'kg/h';
+        }
+
+        function backToMenu() {
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('helicopterMenu').classList.remove('hidden');
+        }
+
+        function logout() {
+            currentUser = null;
+            selectedHelicopter = null;
+            document.getElementById('helicopterMenu').classList.add('hidden');
+            document.getElementById('mainApp').classList.add('hidden');
+            document.getElementById('loginPage').classList.remove('hidden');
+            
+            // Clear form
+            document.getElementById('username').value = '';
+            document.getElementById('password').value = '';
+        }
+
+        function calculateAll() {
+            // Get input values
+            const airspeed = parseFloat(document.getElementById('airspeed').value) || 0;
+            const fuelOnboard = parseFloat(document.getElementById('fuelOnboard').value) || 0;
+            const emptyWeight = parseFloat(document.getElementById('emptyWeight').value) || 0;
+            const engineerWeight = parseFloat(document.getElementById('engineerWeight').value) || 0;
+            const grossWeight = parseFloat(document.getElementById('grossWeight').value) || 0;
+            const paxWeightKg = parseFloat(document.getElementById('paxWeight').value) || 75;
+            const missionDistance = parseFloat(document.getElementById('missionDistance').value) || 0;
+
+            // Get pilot weights based on helicopter type
+            let totalPilotWeight;
+            if (selectedHelicopter === 'bell412') {
+                const captPilotWeight = parseFloat(document.getElementById('captPilotWeight').value) || 0;
+                const coPilotWeight = parseFloat(document.getElementById('coPilotWeight').value) || 0;
+                totalPilotWeight = captPilotWeight + coPilotWeight;
+            } else {
+                totalPilotWeight = parseFloat(document.getElementById('pilotWeight').value) || 0;
+            }
+
+            // Convert weights to appropriate units for calculation
+            let fuelOnboardCalc, emptyWeightCalc, totalPilotWeightCalc, engineerWeightCalc, grossWeightCalc, paxWeightCalc;
+            
+            if (selectedHelicopter === 'bell412') {
+                // For Bell 412, convert pilot and engineer weights from kg to lbs
+                fuelOnboardCalc = fuelOnboard;
+                emptyWeightCalc = emptyWeight;
+                totalPilotWeightCalc = totalPilotWeight * 2.20462; // Convert pilot weights from kg to lbs
+                engineerWeightCalc = engineerWeight * 2.20462; // Convert engineer weight from kg to lbs
+                grossWeightCalc = grossWeight;
+                paxWeightCalc = paxWeightKg * 2.20462; // Convert pax weight from kg to lbs
+            } else {
+                // Keep kg for Agusta 109S
+                fuelOnboardCalc = fuelOnboard;
+                emptyWeightCalc = emptyWeight;
+                totalPilotWeightCalc = totalPilotWeight;
+                engineerWeightCalc = engineerWeight;
+                grossWeightCalc = grossWeight;
+                paxWeightCalc = paxWeightKg;
+            }
+
+            // Calculate fuel consumption based on helicopter type and airspeed
+            let fuelConsumption;
+            if (selectedHelicopter === 'bell412') {
+                // Bell 412: airspeed x 7
+                fuelConsumption = airspeed * 7;
+            } else {
+                // Agusta 109S: airspeed x 1.6
+                fuelConsumption = airspeed * 1.6;
+            }
+            document.getElementById('fuelConsumption').textContent = fuelConsumption.toFixed(0);
+
+            // Display fuel onboard in payload calculation
+            if (selectedHelicopter === 'bell412') {
+                // For Bell 412, show original fuel onboard value (not converted)
+                document.getElementById('fuelWeightDisplay').textContent = fuelOnboard.toFixed(0);
+            } else {
+                // For Agusta 109S, show as is
+                document.getElementById('fuelWeightDisplay').textContent = fuelOnboardCalc.toFixed(0);
+            }
+
+            // Calculate dry weight (empty + pilot + engineer + fuel)
+            const dryWeight = emptyWeightCalc + totalPilotWeightCalc + engineerWeightCalc + fuelOnboardCalc;
+            document.getElementById('dryWeight').textContent = dryWeight.toFixed(0);
+
+            // Calculate payload (gross weight - dry weight)
+            const payloadResult = grossWeightCalc - dryWeight;
+            document.getElementById('payloadResult').textContent = payloadResult.toFixed(0);
+            
+            // For Bell 412, also show payload in kg
+            if (selectedHelicopter === 'bell412') {
+                const payloadKg = payloadResult / 2.20462; // Convert lbs to kg
+                document.getElementById('payloadKg').textContent = payloadKg.toFixed(0);
+            }
+
+            // Calculate total passengers
+            const totalPax = Math.floor(payloadResult / paxWeightCalc);
+            document.getElementById('totalPax').textContent = totalPax;
+
+            // Calculate flight endurance in hours and minutes
+            // Flight Endurance = Fuel Onboard ÷ Fuel Consumption (always use this simple formula)
+            let flightEnduranceHours;
+            if (selectedHelicopter === 'bell412') {
+                // For Bell 412: use original fuel onboard value (not converted to lbs)
+                flightEnduranceHours = fuelOnboard / fuelConsumption;
+            } else {
+                // For Agusta 109S: use fuel onboard as is
+                flightEnduranceHours = fuelOnboardCalc / fuelConsumption;
+            }
+            const hours = Math.floor(flightEnduranceHours);
+            const minutes = Math.round((flightEnduranceHours - hours) * 60);
+            document.getElementById('flightEndurance').textContent = `${hours}h ${minutes}m`;
+
+            // Calculate max range in nautical miles
+            const maxRangeNm = airspeed * flightEnduranceHours;
+            document.getElementById('maxRange').textContent = maxRangeNm.toFixed(0);
+
+            // Mission calculations (missionDistance is now in Nm)
+            const missionFlightTime = missionDistance / airspeed;
+            const missionHours = Math.floor(missionFlightTime);
+            const missionMinutes = Math.round((missionFlightTime - missionHours) * 60);
+            document.getElementById('missionFlightTime').textContent = `${missionHours}h ${missionMinutes}m`;
+
+            const fuelRequired = missionFlightTime * fuelConsumption;
+            document.getElementById('fuelRequired').textContent = fuelRequired.toFixed(0);
+
+            const remainingFuel = fuelOnboardCalc - fuelRequired;
+            document.getElementById('remainingFuel').textContent = remainingFuel.toFixed(0);
+
+            // Update status indicators (use appropriate max weight based on helicopter)
+            const maxWeight = selectedHelicopter === 'bell412' ? 26235 : 3500; // 11900 lbs = 5398 kg, but using lbs for Bell
+            updateStatusIndicators(grossWeightCalc, maxWeight, remainingFuel, maxRangeNm, missionDistance);
+        }
+
+        function updateStatusIndicators(totalWeight, maxWeight, remainingFuel, maxRangeNm, missionDistance) {
+            const weightStatus = document.getElementById('weightStatus');
+            const fuelStatus = document.getElementById('fuelStatus');
+            const rangeStatus = document.getElementById('rangeStatus');
+
+            // Weight status
+            if (totalWeight <= maxWeight) {
+                weightStatus.className = 'p-3 rounded-lg bg-green-600 text-white text-center font-semibold';
+                weightStatus.innerHTML = '✅ Berat dalam batas aman';
+            } else {
+                weightStatus.className = 'p-3 rounded-lg bg-red-600 text-white text-center font-semibold';
+                weightStatus.innerHTML = '⚠️ Berat melebihi batas maksimal';
+            }
+
+            // Fuel status
+            if (remainingFuel >= 0) {
+                fuelStatus.className = 'p-3 rounded-lg bg-green-600 text-white text-center font-semibold';
+                fuelStatus.innerHTML = '✅ Bahan bakar mencukupi';
+            } else {
+                fuelStatus.className = 'p-3 rounded-lg bg-red-600 text-white text-center font-semibold';
+                fuelStatus.innerHTML = '⚠️ Bahan bakar tidak mencukupi';
+            }
+
+            // Range status (comparing Nm to Nm)
+            if (maxRangeNm >= missionDistance) {
+                rangeStatus.className = 'p-3 rounded-lg bg-green-600 text-white text-center font-semibold';
+                rangeStatus.innerHTML = '✅ Jangkauan dapat dicapai';
+            } else {
+                rangeStatus.className = 'p-3 rounded-lg bg-yellow-600 text-white text-center font-semibold';
+                rangeStatus.innerHTML = '⚠️ Jangkauan terbatas';
+            }
+        }
+
+        // Initialize calculations on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateAll();
+        });
+    </script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'98a2ac5d6316445e',t:'MTc1OTcyNzY0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
